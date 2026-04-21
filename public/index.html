@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart City Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* Background (same feel as your image) */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: rgba(255,255,255,0.1);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero h1 {
+    font-size: 32px;
+}
+
+.hero p {
+    opacity: 0.8;
+}
+
+.hero button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    cursor: pointer;
+}
+
+/* Form Section */
+.form-container {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+button.submit-btn {
+    width: 100%;
+    background: #00c6ff;
+    color: white;
+    padding: 10px;
+}
+
+/* Location Button */
+.location-btn {
+    margin-top: 5px;
+    padding: 8px;
+    background: #555;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div><b>SmartCity Report</b></div>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="#report">Report Issue</a>
+        <a href="admin.html">Admin Dashboard</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>SMART CITY PROBLEM REPORTING SYSTEM</h1>
+    <p>Report Issues. Improve Your City.</p>
+
+    <button onclick="scrollToForm()">Report an Issue</button>
+</div>
+
+<!-- FORM -->
+<div class="form-container" id="report">
+    <h2>Report an Issue</h2>
+
+    <form id="reportForm" enctype="multipart/form-data">
+
+        <input type="text" name="name" placeholder="Full Name" required>
+
+        <select name="category" required>
+            <option value="">Select Category</option>
+            <option>Pothole</option>
+            <option>Garbage</option>
+            <option>Street Light</option>
+        </select>
+
+        <input type="text" name="location" id="location" placeholder="Location" required>
+
+        <div class="location-btn" onclick="useCurrentLocation()">
+            📍 Use Current Location
+        </div>
+
+        <input type="file" name="image" accept="image/*">
+
+        <textarea name="description" placeholder="Describe the issue..." required></textarea>
+
+        <button type="submit" class="submit-btn">Submit Complaint</button>
+
+    </form>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+// Smooth scroll
+function scrollToForm() {
+    document.getElementById("report").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+</script>
+
+</body>
+</html>

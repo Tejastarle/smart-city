@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart City Admin Dashboard</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+.container {
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #444;
+}
+
+.active {
+    background: #00c6ff;
+}
+
+/* Stats */
+.stats {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.1);
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #555;
+    text-align: center;
+}
+
+img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+/* Status Colors */
+.pending { color: orange; }
+.progress { color: cyan; }
+.resolved { color: lightgreen; }
+
+/* Buttons */
+button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-progress { background: #00c6ff; }
+.btn-resolved { background: green; }
+
+/* Details Panel */
+.details {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255,255,255,0.1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Smart City Admin Dashboard</h1>
+
+<!-- Stats -->
+<div class="stats">
+    Total: <span id="total">0</span> |
+    Pending: <span id="pending">0</span> |
+    In Progress: <span id="progress">0</span> |
+    Resolved: <span id="resolved">0</span>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+    <div class="tab active" onclick="filterStatus('All')">All</div>
+    <div class="tab" onclick="filterStatus('Pending')">Pending</div>
+    <div class="tab" onclick="filterStatus('In Progress')">In Progress</div>
+    <div class="tab" onclick="filterStatus('Resolved')">Resolved</div>
+</div>
+
+<!-- Table -->
+<table>
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Location</th>
+    <th>Status</th>
+    <th>Image</th>
+    <th>Actions</th>
+</tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+
+<!-- Details -->
+<div class="details" id="details">
+    <h3>Complaint Details</h3>
+    <p>Select a complaint</p>
+</div>
+
+</div>
+
+<script>
+let complaints = [];
+let currentFilter = "All";
+
+// =====================
+// Load Data
+// =====================
+async function loadComplaints() {
+    const res = await fetch("/api/complaints");
+    complaints = await res.json();
+    renderTable();
+}
+
+async function loadStats() {
+    const res = await fetch("/api/stats");
+    const data = await res.json();
+
+    document.getElementById("total").innerText = data.total;
+    document.getElementById("pending").innerText = data.pending;
+    document.getElementById("progress").innerText = data.progress;
+    document.getElementById("resolved").innerText = data.resolved;
+}
+
+// =====================
+// Render Table
+// =====================
+function renderTable() {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+
+    let filtered = complaints;
+
+    if (currentFilter !== "All") {
+        filtered = complaints.filter(c => c.status === currentFilter);
+    }
+
+    filtered.forEach(c => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${c.name}</td>
+            <td>${c.category}</td>
+            <td>${c.location}</td>
+            <td class="${getStatusClass(c.status)}">${c.status}</td>
+            <td><img src="${c.image}" /></td>
+            <td>
+                <button onclick="viewDetails('${c._id}')">View</button>
+                <button class="btn-progress" onclick="updateStatus('${c._id}', 'In Progress')">Progress</button>
+                <button class="btn-resolved" onclick="updateStatus('${c._id}', 'Resolved')">Resolve</button>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+// =====================
+// Status Styling
+// =====================
+function getStatusClass(status) {
+    if (status === "Pending") return "pending";
+    if (status === "In Progress") return "progress";
+    if (status === "Resolved") return "resolved";
+}
+
+// =====================
+// Filter
+// =====================
+function filterStatus(status) {
+    currentFilter = status;
+
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    event.target.classList.add("active");
+
+    renderTable();
+}
+
+// =====================
+// Update Status
+// =====================
+async function updateStatus(id, status) {
+    await fetch(`/api/update-status/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status })
+    });
+
+    loadComplaints();
+    loadStats();
+}
+
+// =====================
+// View Details
+// =====================
+async function viewDetails(id) {
+    const res = await fetch(`/api/complaint/${id}`);
+    const c = await res.json();
+
+    document.getElementById("details").innerHTML = `
+        <h3>Complaint Details</h3>
+        <p><b>Name:</b> ${c.name}</p>
+        <p><b>Category:</b> ${c.category}</p>
+        <p><b>Location:</b> ${c.location}</p>
+        <p><b>Status:</b> ${c.status}</p>
+        <p><b>Description:</b> ${c.description}</p>
+        <p><b>Date:</b> ${new Date(c.date).toLocaleString()}</p>
+        <img src="${c.image}" width="200">
+    `;
+}
+
+// =====================
+// Init
+// =====================
+loadComplaints();
+loadStats();
+</script>
+
+</body>
+</html>

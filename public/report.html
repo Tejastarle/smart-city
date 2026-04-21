@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Report Issue - Smart City</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: rgba(255,255,255,0.1);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.active {
+    border-bottom: 2px solid #00c6ff;
+}
+
+/* Container */
+.container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+
+/* Form */
+input, select, textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Buttons */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+.location-btn {
+    margin-top: 5px;
+    display: inline-block;
+    padding: 8px 12px;
+    background: #555;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div><b>SmartCity Report</b></div>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="report.html" class="active">Report Issue</a>
+        <a href="admin.html">Admin Dashboard</a>
+    </div>
+</div>
+
+<!-- FORM -->
+<div class="container">
+
+<h2>Report an Issue</h2>
+
+<form id="reportForm" enctype="multipart/form-data">
+
+    <!-- Name -->
+    <input type="text" name="name" placeholder="Full Name" required>
+
+    <!-- Category -->
+    <select name="category" required>
+        <option value="">Select Category</option>
+        <option>Pothole</option>
+        <option>Garbage</option>
+        <option>Street Light</option>
+    </select>
+
+    <!-- Location -->
+    <input type="text" name="location" id="location" placeholder="Location" required>
+
+    <div class="location-btn" onclick="useCurrentLocation()">
+        📍 Use Current Location
+    </div>
+
+    <!-- Image -->
+    <input type="file" name="image" accept="image/*">
+
+    <!-- Description -->
+    <textarea name="description" rows="4" placeholder="Describe the issue..." required></textarea>
+
+    <!-- Submit -->
+    <button type="submit" class="submit-btn">Submit Complaint</button>
+
+</form>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

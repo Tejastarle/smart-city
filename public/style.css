@@ -1,0 +1,270 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.navbar a:hover {
+    color: #00c6ff;
+}
+
+.navbar .active {
+    border-bottom: 2px solid #00c6ff;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    opacity: 0.8;
+    font-size: 16px;
+}
+
+.hero button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.hero button:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   CARD / CONTAINER
+========================= */
+.container,
+.form-container,
+.details {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+input,
+select,
+textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Buttons */
+button,
+.submit-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Submit */
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    margin-top: 10px;
+}
+
+/* Location */
+.location-btn {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.location-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Stats */
+.stats {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tab:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+.tab.active {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+}
+
+/* =========================
+   TABLE
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+th {
+    background: rgba(255,255,255,0.1);
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* Images */
+td img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* =========================
+   STATUS COLORS
+========================= */
+.pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.progress {
+    color: cyan;
+    font-weight: bold;
+}
+
+.resolved {
+    color: lightgreen;
+    font-weight: bold;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+.btn-progress {
+    background: #00c6ff;
+}
+
+.btn-resolved {
+    background: green;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* =========================
+   DETAILS PANEL
+========================= */
+.details img {
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
